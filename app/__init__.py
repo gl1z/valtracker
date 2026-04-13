@@ -12,6 +12,9 @@ def create_app(config_name="default"):
     from app.routes.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
 
+    from app.routes.players import players_bp
+    app.register_blueprint(players_bp)
+
     with app.app_context():
         db.create_all()
 
