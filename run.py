@@ -1,16 +1,6 @@
-from flask import Flask, jsonify
-from config import config_map
-from app.extensions import db, jwt
+from app import create_app
 
-def create_app(config_name="default"):
-    app = Flask(__name__)
-    app.config.from_object(config_map[config_name])
+app = create_app()
 
-    db.init_app(app)
-    jwt.init_app(app)
-
-    @app.route("/health")
-    def health():
-        return jsonify({"status": "ok"})
-
-    return app
+if __name__ == "__main__":
+    app.run(debug=True)
