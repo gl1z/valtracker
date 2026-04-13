@@ -27,9 +27,32 @@ def create_app(config_name="default"):
 
     with app.app_context():
         db.create_all()
+        _seed_agents()
 
     @app.route("/health")
     def health():
         return jsonify({"status": "ok", "app": "valtracker"})
 
     return app
+
+_AGENTS = [
+    ("Jett", "duelist"), ("Reyna", "duelist"), ("Raze", "duelist"),
+    ("Phoenix", "duelist"), ("Neon", "duelist"), ("Iso", "duelist"),
+    ("Waylay", "duelist"), ("Yoru", "duelist"),
+    ("Brimstone", "controller"), ("Viper", "controller"), ("Omen", "controller"),
+    ("Astra", "controller"), ("Harbor", "controller"), ("Clove", "controller"),
+    ("Miks", "controller"),
+    ("Sage", "sentinel"), ("Cypher", "sentinel"), ("Killjoy", "sentinel"),
+    ("Chamber", "sentinel"), ("Deadlock", "sentinel"), ("Vyse", "sentinel"),
+    ("Veto", "sentinel"),
+    ("Sova", "initiator"), ("Breach", "initiator"), ("Skye", "initiator"),
+    ("KAY/O", "initiator"), ("Fade", "initiator"), ("Gekko", "initiator"),
+    ("Tejo", "initiator"),
+]
+
+def _seed_agents():
+    from app.models import Agent
+    for name, role in _AGENTS:
+        if not Agent.query.filter_by(name=name).first():
+            db.session.add(Agent(name=name, role=role))
+    db.session.commit()
