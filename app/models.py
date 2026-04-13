@@ -15,7 +15,6 @@ TOURNAMENT_FORMATS = ["single_elimination", "round_robin"]
 def utcnow():
     return datetime.now(timezone.utc).replace(tzinfo=None)
 
-
 class User(db.Model):
     __tablename__ = "users"
 
@@ -35,7 +34,6 @@ class User(db.Model):
 
     def to_dict(self):
         return {"id": self.id, "username": self.username, "email": self.email}
-
 
 class Player(db.Model):
     __tablename__ = "players"
@@ -100,7 +98,6 @@ class Player(db.Model):
             data["stats"] = self.aggregate_stats()
         return data
 
-
 class Agent(db.Model):
     __tablename__ = "agents"
 
@@ -112,7 +109,6 @@ class Agent(db.Model):
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "role": self.role}
-
 
 class Match(db.Model):
     __tablename__ = "matches"
@@ -156,7 +152,6 @@ class Match(db.Model):
         if include_participants:
             data["participants"] = [p.to_dict() for p in self.participants]
         return data
-
 
 class MatchParticipant(db.Model):
     __tablename__ = "match_participants"
@@ -211,7 +206,6 @@ class MatchParticipant(db.Model):
             "is_winner": self.is_winner,
         }
 
-
 class Tournament(db.Model):
     __tablename__ = "tournaments"
 
@@ -238,7 +232,6 @@ class Tournament(db.Model):
         if include_teams:
             data["teams"] = [t.to_dict() for t in self.teams]
         return data
-
 
 class Team(db.Model):
     __tablename__ = "teams"
@@ -270,7 +263,6 @@ class Team(db.Model):
             data["members"] = [m.to_dict() for m in self.members]
         return data
 
-
 class TeamMember(db.Model):
     __tablename__ = "team_members"
 
@@ -293,7 +285,6 @@ class TeamMember(db.Model):
             "team_id": self.team_id,
             "joined_at": self.joined_at.isoformat(),
         }
-
 
 class TournamentMatch(db.Model):
     __tablename__ = "tournament_matches"

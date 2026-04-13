@@ -9,6 +9,12 @@ def create_app(config_name="default"):
     db.init_app(app)
     jwt.init_app(app)
 
+    from app.routes.auth import bp as auth_bp
+    app.register_blueprint(auth_bp)
+
+    with app.app_context():
+        db.create_all()
+
     @app.route("/health")
     def health():
         return jsonify({"status": "ok", "app": "valtracker"})
