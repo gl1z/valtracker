@@ -19,6 +19,9 @@ def create_app(config_name="default"):
     app.register_blueprint(matches_bp)
     app.register_blueprint(agents_bp)
 
+    from app.routes.tournaments import tournaments_bp
+    app.register_blueprint(tournaments_bp)
+
     with app.app_context():
         db.create_all()
 
