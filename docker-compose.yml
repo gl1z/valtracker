@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: valtracker
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_CONFIG: development
+      DATABASE_URL: postgresql://postgres:password@db:5432/valtracker
+      SECRET_KEY: change-this-in-production
+      JWT_SECRET_KEY: change-this-too
+    depends_on:
+      - db
+      -
