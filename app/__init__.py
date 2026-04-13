@@ -22,6 +22,9 @@ def create_app(config_name="default"):
     from app.routes.tournaments import tournaments_bp
     app.register_blueprint(tournaments_bp)
 
+    from app.routes.leaderboard import leaderboard_bp
+    app.register_blueprint(leaderboard_bp)
+
     with app.app_context():
         db.create_all()
 
