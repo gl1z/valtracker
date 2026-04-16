@@ -62,6 +62,22 @@ GET  /auth/me
 
 ---
 
+## Rate Limiting
+
+Auth endpoints are rate limited to prevent brute force attacks.
+
+| Endpoint | Default Limit |
+|---|---|
+| POST /auth/login | 10 per minute |
+| POST /auth/register | 5 per minute |
+
+Override via environment variables:
+- `AUTH_LOGIN_RATE_LIMIT`
+- `AUTH_REGISTER_RATE_LIMIT`
+
+Exceeding the limit returns `429 Too Many Requests`.
+---
+
 ## Endpoints
 
 ### Players
