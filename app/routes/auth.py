@@ -1,11 +1,12 @@
-from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from app.extensions import db
 from app.models import User
+from flask import Blueprint, request, jsonify, current_app
+from app.extensions import db, limiter
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 @bp.route("/register", methods=["POST"])
+@limiter.limit(lambda: current_app.config["AUTH_REGISTER_RATE_LIMIT"])
 def register():
     data = request.get_json()
     if not data or not data.get("username") or not data.get("email") or not data.get("password"):
@@ -25,6 +26,7 @@ def register():
     return jsonify({"message": "registered", "user": user.to_dict()}), 201
 
 @bp.route("/login", methods=["POST"])
+@limiter.limit(lambda: current_app.config["AUTH_LOGIN_RATE_LIMIT"])
 def login():
     data = request.get_json()
     if not data or not data.get("username") or not data.get("password"):
