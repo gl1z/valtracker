@@ -19,4 +19,3 @@ services:
       JWT_SECRET_KEY: change-this-too
     depends_on:
       - db
-      -
