@@ -5,7 +5,11 @@ A REST API for tracking Valorant tournaments, teams, players, and match results.
 Built with Flask, SQLAlchemy, and PostgreSQL. Runs locally with Docker.
 
 ---
+## Demo
 
+![Demo](demo.gif)
+
+---
 ## What it does
 
 - Register and manage players with region support (NA, EU, AP, KR, BR, LATAM, CN)
